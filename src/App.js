@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useEffect, useState} from 'react';
+import axios from 'axios';
+import RickandMorty from './RickandMorty';
 
 function App() {
+   const [charName , setCharName] = useState([]);
+   useEffect(()=>{
+    getCharNames();
+   } ,[])
+   const  getCharNames =  async ()=>{
+    const response = await axios.get(
+      'https://rickandmortyapi.com/api/character/1,183,11,22'
+    );
+      setCharName(response.data);
+
+   }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1 style={{margin:10}}>Homework</h1>
+      <div>{charName.map(chars => <RickandMorty name={chars.name} gender={chars.gender} species={chars.species} image={chars.image}/>)}</div>
+    </>
   );
 }
 
